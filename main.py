@@ -20,8 +20,11 @@ def add_game(vid_name):
     yt_vid = VideoFileClip(f'clips/{vid_name}.mp4')
     yt_vid.resize((720,800))
 
-    games = os.listdir('games')
-    game = random.choice(games)
+    game_duration = 0
+    while game_duration < yt_vid.duration:
+        games = os.listdir('games')
+        game = random.choice(games)
+        game_duration = game.duration
     game = VideoFileClip(f'games/{game}').without_audio()
     game = game.subclip(0,yt_vid.duration)
     game = game.resize((720,480))
