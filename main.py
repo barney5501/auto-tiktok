@@ -2,10 +2,11 @@ import os
 import random
 from pytube import YouTube, Playlist
 from moviepy.editor import VideoFileClip, clips_array
+from moviepy.video.fx.all import crop
 
 def download_vid(video):
     files = os.listdir('clips')
-    vid_name = 1 if len(files)==0 else sorted([int(name.split('.')[0]) for name in os.listdir('.')])[-1]+1
+    vid_name = 1 if len(files)==0 else sorted([int(name.split('.')[0]) for name in files])[-1]+1
     if type(video) == str:
         video = YouTube(video)
     try:
@@ -26,6 +27,7 @@ def add_game(vid_name):
     game = game.resize((720,480))
 
     export_vid = clips_array([[yt_vid], [game]])
+    export_vid = crop(export_vid, width=yt_vid.w)
 
     return export_vid
 
